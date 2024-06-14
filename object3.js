@@ -12,6 +12,8 @@ function main() {
         password : "1234"
     }
 
+    // delete user.password;
+
     console.log(user);
 
     const newUser = modifyUser(user, "username", "test-user");
@@ -20,7 +22,7 @@ function main() {
     const newUser2 = modifyUser(user, "password", "1111");
     console.log(newUser2);
 
-    const userlist = [ user, newUser ];     //100
+    const userList = [ user, newUser ];     //100
     const newUserList = [ ...userList, newUser2 ];    //200
 
     // 스프레드 -> 깊은 복사 (안에 있는 값 새로운 주소에)
