@@ -1,6 +1,7 @@
 
 let userList = [];
 let emptyUser = {
+    name: "",
     username: "",
     password: ""
 };
@@ -11,12 +12,14 @@ let user = {
 
 function renderTable() {
     const userTableBody = document.querySelector(".user-table-body");
-    userTableBody.innerHTML = userList.map(({username, password}, index) => {
+    userTableBody.innerHTML = userList.map(({name, username, password}, index) => {
         return `
             <tr>
                 <td>${index + 1}</td>
+                <td>${name}</td>
                 <td>${username}</td>
                 <td>${password}</td>
+                <th><button>삭제</button></th>
             </tr>
         `;
     }).join("");
@@ -29,8 +32,13 @@ function handleUserInputKeyDown(e) {
     }
 
     if(e.keyCode === 13) {
+        const nameInput = document.querySelector(".name-input");
         const usernameInput = document.querySelector(".username-input");
         const passwordInput = document.querySelector(".password-input");
+
+        if(e.target.name === "name") {
+            usernameInput.focus();
+        }
 
         if(e.target.name === "username") {
             passwordInput.focus();
@@ -39,12 +47,21 @@ function handleUserInputKeyDown(e) {
             userList = [ ...userList, { ...user } ];
 
             renderTable();
-
+            
+            nameInput.value = emptyUser.username;
             usernameInput.value = emptyUser.username;
             passwordInput.value = emptyUser.password;
 
-            usernameInput.focus();
+            nameInput.focus();
         }
     }
-    console.log(e.target.name);
+}
+
+function saveUserList() {
+    localStorage.setItem("userList", JSON.stringify(userList));
+}
+
+function loadUserList() {
+    const lsUserList = localStorage.getItem("userList");
+    userList = !lsUserList ? [] : JSON.parse(lsUserList);
 }
