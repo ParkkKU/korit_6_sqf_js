@@ -54,7 +54,7 @@ function renderTodoList() {
                     <h3 class="todo-date">${todo.date}</h3>
                     <p class="todo-content">${todo.content}</p>
                     <div class="todo-buttons">
-                        <button class="button edit-button" onclick="openModal()">수정</button>
+                        <button class="button edit-button" onclick="handleEditClick(event)" value=${todo.id}>수정</button>
                         <button class="button delete-button" onclick="handleDeleteClick(event)" value=${todo.id}>삭제</button>
                     </div>
                 </li>
@@ -76,12 +76,6 @@ function transformDate(date) {
     const dayList = [ "일", "월", "화", "수", "목", "금", "토" ];
     return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}(${dayList[date.getDay()]}) ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     // 2024.05.18(화) 14:55:50
-
-    // const year = date.getFullYear();
-    // const month = date.getMonth() + 1;   // 0월 ~ 11월
-    // const date = date.getDate();
-    // const day = date.getDay();
-
 }
 
 function handleDeleteClick(e) {
@@ -100,12 +94,16 @@ function handleEditClick(e) {
                 <input type="text" class="todo-input" onKeyDown = "if(event.keyCode === 13) document.querySelector('.modal button:nth-of-type(1)').click()">
             </div>
             <div class="todo-buttons">
-                <button class="button" onclick="handleEditOkClcik(event)" value="${e.target.value}">확인</button>
+                <button class="button" onclick="handleEditOkClick(event)" value="${e.target.value}">확인</button>
                 <button class="button" onclick="closeModal()">취소</button>
             </div>
         </div>
     `;
-    openModal();
+    console.log(element);
+    openModal(element);
+
+    const todoInput = document.querySelector(".modal .todo-input");
+    todoInput.focus();
 }
 
 function handleEditOkClick(e) {
@@ -129,6 +127,7 @@ function handleModalBackgroundClick() {
 }
 
 function openModal(element) {
+    console.log(element);
     const modal = document.querySelector(".modal");
     modal.classList.add("modal-show");
     modal.innerHTML = element;
