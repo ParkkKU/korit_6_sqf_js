@@ -99,7 +99,6 @@ function handleEditClick(e) {
             </div>
         </div>
     `;
-    console.log(element);
     openModal(element);
 
     const todoInput = document.querySelector(".modal .todo-input");
@@ -127,7 +126,6 @@ function handleModalBackgroundClick() {
 }
 
 function openModal(element) {
-    console.log(element);
     const modal = document.querySelector(".modal");
     modal.classList.add("modal-show");
     modal.innerHTML = element;
